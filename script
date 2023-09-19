@@ -1,0 +1,157 @@
+n = ''
+a = 0
+ph = ''
+e = ''
+i = ''
+address = ''
+ind = ''
+
+inn = ''
+ogr = ''
+bik = ''
+pa = ''
+bank = ''
+ca = ''
+LOL = '------------------------------------------'
+
+def check_number(number, full_number):
+    if full_number == 15:
+        number = int(input('Введите номер ОГРНИП: '))
+        number_save = number
+        count = 0
+        while number > 0:
+            number //= 10
+            count += 1
+        if count != full_number:
+            print('ОГРНИП должен содержать 15 цифр')
+            check_number(number, full_number)
+        else:
+            return number_save
+
+    else:
+        number = int(input('Введите расчетный счет: '))
+        number_save = number
+        count = 0
+        while number > 0:
+            number //= 10
+            count += 1
+        if count != full_number:
+            print('Расчетный счет должен содержать 20 цифр')
+            check_number(number, full_number)
+        else:
+            return number_save
+
+
+def general_info_user(n_parameter, a_parameter, ph_parameter, e_parameter, address_parameter, ind_parameter,
+                      i_parameter):
+    print(LOL)
+    print('Имя:    ', n_parameter)
+    if 11 <= a_parameter % 100 <= 19:
+        years_parameter = 'лет'
+    elif a_parameter % 10 == 1:
+        years_parameter = 'год'
+    elif 2 <= a_parameter % 10 <= 4:
+        years_parameter = 'года'
+    else:
+        years_parameter = 'лет'
+
+    print('Возраст:', a_parameter, years_parameter)
+    print('Телефон:', ph_parameter)
+    print('E-mail:\t', e_parameter)
+    print('Адрес:\t', address_parameter)
+    print('Индекс:\t', ind_parameter)
+    if i:
+        print('')
+        print('Дополнительная информация:')
+        print(i_parameter)
+
+
+print('Приложение MyProfile')
+print('Сохраняй информацию о себе и выводи ее в разных форматах')
+
+while True:
+    # main menu
+    print(LOL)
+    print('ГЛАВНОЕ МЕНЮ')
+    print('1 - Ввести или обновить информацию')
+    print('2 - Вывести информацию')
+    print('0 - Завершить работу')
+
+    option = int(input('Введите номер пункта меню: '))
+    if option == 0:
+        break
+
+    if option == 1:
+        # submenu 1: edit info
+        while True:
+            print(LOL)
+            print('ВВЕСТИ ИЛИ ОБНОВИТЬ ИНФОРМАЦИЮ')
+            print('1 - Личная информация')
+            print('2 - Информация о предпринимателе')
+            print('0 - Назад')
+
+            option2 = int(input('Введите номер пункта меню: '))
+            if option2 == 0:
+                break
+            if option2 == 1:
+                # input general info
+                n = input('Введите имя: ')
+                while 1:
+                    # validate user age
+                    a = int(input('Введите возраст: '))
+                    if a > 0:
+                        break
+                    print('Возраст должен быть положительным')
+
+                uph = input('Введите номер телефона (+7ХХХХХХХХХХ): ')
+                ph = ''
+                for ch in uph:
+                    if ch == '+' or ('0' <= ch <= '9'):
+                        ph += ch
+
+                e = input('Введите адрес электронной почты: ')
+                address = input('Введите почтовый адрес: ')
+                ind = input('Введите индекс: ')
+                ind = int(ind)
+                i = input('Введите дополнительную информацию:\n')
+
+            elif option2 == 2:
+                # input organization data links
+                ogr = check_number(ogr, 15)
+                inn = int(input('Введите номер  ИНН: '))
+                pa = check_number(pa, 20)
+                bank = input('Введите название банка: ')
+                bik = input('Введите БИК: ')
+                ca = input('Введите корреспондентский счет: ')
+            else:
+                print('Введите корректный пункт меню')
+    elif option == 2:
+        # submenu 2: print info
+        while True:
+            print(LOL)
+            print('ВЫВЕСТИ ИНФОРМАЦИЮ')
+            print('1 - Общая информация')
+            print('2 - Вся информация')
+            print('0 - Назад')
+            option2 = int(input('Введите номер пункта меню: '))
+            if option2 == 0:
+                break
+            if option2 == 1:
+                general_info_user(n, a, ph, e, address, ind, i)
+            elif option2 == 2:
+                general_info_user(n, a, ph, e, address, ind, i)
+
+                # print organization data links
+                print('')
+                print('Информация о предпринимателе: ')
+                print('ОГРНИП:\t ', ogr)
+                print('ИНН:\t ', inn)
+                print('Банковские реквизиты: ')
+                print('Р/с:\t ', pa)
+                print('Банк:\t ', bank)
+                print('БИК:\t ', bik)
+                print('К/с:\t ', ca)
+            else:
+                print('Введите корректный пункт меню')
+    else:
+        print('Введите корректный пункт меню')
